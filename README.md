@@ -1,6 +1,6 @@
-# Skeleton (Last updated 26/11/2024)
+# Request Formation (Last updated 05/12/2024)
 
-The goal of this project is to provide a "skeleton" for building Angular applications that integrate Firebase authentication. This project serves as a starting point for developing other Angular applications that require a secure authentication system, without having to rebuild this functionality each time.
+The goal of this project is to provide a platform for managing and tracking training requests, with the ability to add new requests. The application integrates Firebase authentication to ensure secure user access. Users can authenticate using Firebase, and their roles and permissions are managed to allow authorized access to specific functionalities. This project serves as a starting point for building Angular applications that require secure user authentication, along with the ability to handle training requests and manage them effectively.
 
 ## Features
 
@@ -8,38 +8,68 @@ The main features of the application are the following ones :
 
 - Create an account and connect to the application
 - Export and delete data
+- Add and Update Training
 
-## Evolution perspectives
-
-Another objective of the project is to provide a technical and functional stack that can be improved by implementing other types of games without having to start from scratch.
-
-The architecture and project structure tries to separate transversal functionalities (such as authentication and profil management) 
-
-Some adapatations could still be needed in order to add new games and a new scope to the application but the amount of work should be reasonable as we kept these concerns in mind.
 
 ## Links
 
-- Gitlab : 
-- Github (used to retrieve codebase when not on Apside network) : 
-- Nextcloud (Kanban): 
+- Github : 
 - Firebase project: 
 - Firestore : 
 - To install the firebase CLI for deployment : https://firebase.google.com/docs/cli?hl=fr#install_the_firebase_cli
 
-## How to clone
+## Get started
 
-- Ask to be added to this project (see Ludovic Barre)
-- Go to the [repoUrl]
-- Export the ssl certificate of the page [(more info)](https://medium.com/@menakajain/export-download-ssl-certificate-from-server-site-url-bcfc41ea46a2)
-- Open git bash and type the following commands :
+
+### 1. Clone the Project
 
 ```bash
-git config --global http.sslCAinfo "path\to\gitlab\exported\certificate\_apsidigit.lan.crt"
-git config --system http.sslCAinfo "path\to\gitlab\exported\certificate\_apsidigit.lan.crt"
-git config --global http.sslVerify false
+git clone https://github.com/SimFerrer/demande-formation.git
 ```
 
-- Clone the repo with via HTTP
+### 2. Install the Project Dependencies
+
+The first step is to install all the necessary dependencies to run the application.
+
+```bash
+npm install
+```
+
+
+### 3. Create a Firebase Project
+
+If you don't have a Firebase project yet, follow these steps to create one:
+
+1. Go to the [the Firebase console](https://console.firebase.google.com/).
+2. Click on **Add Project** and follow the steps to create your project.
+3. Once your Firebase project is created, you need to enable Firestore and authentication options to allow your application to store data and manage users.
+
+
+## 4. Configure Firebase Variables in Your Project
+
+Now you need to integrate your Firebase project into the Angular application. Firebase will provide the necessary information for configuration.
+
+1. Go to **Project Settings** (gear icon at the top left in the Firebase console).
+2. Retrieve the configuration details for your web application.
+
+Then, update `src/environments/environment.ts` with these details:
+
+```typescript
+export const environment = {
+  production: false,
+  firebaseConfig: {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_AUTH_DOMAIN",
+    databaseURL: "YOUR_DATABASE_URL",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_STORAGE_BUCKET",
+    messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+    appId: "YOUR_APP_ID",
+    measurementId: "YOUR_MEASUREMENT_ID"
+  }
+};
+```
+Replace the values with the specific information for your Firebase project.
 
 ## Architecture
 
@@ -57,6 +87,7 @@ To make the integration of firebase in this project easier we also use **Angular
 - Core : application components and services that are not specific to any game (profile, header, footer) and that can be used from anywhere in the application (pop-up )
 - Auth : components, models and services used to manage user authentication (signup, login...)
 - Shared : custom validators and material module exporting all Material components
+- Training : components, models and services used to manage training (list, create, reference data for modules and organisms)
 
 ## NgRx
 

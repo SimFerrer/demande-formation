@@ -5,7 +5,7 @@ import { map, catchError, switchMap, tap, take } from 'rxjs/operators';
 import { TrainingService } from '../services/training.service';
 import * as TrainingActions from './training.actions';
 import { UserService } from '../../auth/services/user.service';
-import { ModuleService } from '../services/module.service';
+import { EntityService } from '../services/entity.service';
 
 @Injectable()
 export class TrainingEffects {
@@ -14,7 +14,7 @@ export class TrainingEffects {
         private actions$: Actions,
         private trainingService: TrainingService,
         private userService: UserService,
-        private moduleService: ModuleService
+        private entityService: EntityService
     ) { }
 
     loadTrainings$ = createEffect(() =>
@@ -59,7 +59,10 @@ export class TrainingEffects {
                             map(user => this.userService.addTrainingById(training.id, user!)),
                             switchMap(updatedUser =>
                                 from(this.userService.update(userID, updatedUser)).pipe(
-                                    tap(() => this.moduleService.addModule(training.module).pipe(take(1)).subscribe()),
+                                    tap(() => {
+                                        this.entityService.addModule(training.module).pipe(take(1)).subscribe()
+                                        this.entityService.addOrganism(training.organism).pipe(take(1)).subscribe()
+                                    }),
                                     map(() => TrainingActions.addTrainingSuccess({ training })),
                                     catchError(error => of(TrainingActions.addTrainingFailure({ error })))
                                 )

@@ -12,7 +12,7 @@ import { Action, ActionsSubject, Store } from '@ngrx/store';
 import { addTraining, loadTraining, updateTraining } from '../store/training.actions';
 import { User } from '../../auth/models/users.model';
 import { getTraining } from '../store/training.selectors';
-import { ModuleService } from '../services/module.service';
+import { EntityService } from '../services/entity.service';
 import { UserService } from '../../auth/services/user.service';
 import { Title } from '@angular/platform-browser';
 
@@ -35,6 +35,9 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
   filteredModules$!: Observable<string[]>;
   private moduleInput$ = new BehaviorSubject<string>('');
 
+  filteredOrganisms$!: Observable<string[]>;
+  private organismInput$ = new BehaviorSubject<string>('');
+
   userCreatedTraining$!: Observable<User>;
   user$: Observable<firebase.User | null> = this.authService.user$;
 
@@ -53,12 +56,12 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
     private router: Router,
     private store: Store,
     private afs: AngularFirestore,
-    private moduleService: ModuleService,
+    private entityService: EntityService,
     private titleService: Title
   ) { }
 
   ngOnDestroy(): void {
-    this.destroy$.next();  
+    this.destroy$.next();
     this.destroy$.complete();
     this.notificationService.clearMessage();
   }
@@ -99,7 +102,7 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
       this.titleService.setTitle('Apsiformation - Modification d\'une formation')
       this.loadTrainingData();
     }
-    else{
+    else {
       this.titleService.setTitle('Apsiformation - Création d\'une formation')
     }
 
@@ -111,7 +114,7 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
   private manageAutocomplete() {
     // Gestion de l'autocomplétion des modules
     this.filteredModules$ = combineLatest([
-      this.moduleService.getModules(),
+      this.entityService.getModules(),
       this.moduleInput$.pipe(startWith('')) // Valeur saisie dans le champ
     ]).pipe(
       map(([modules, input]) =>
@@ -122,6 +125,23 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
     // Synchronise les changements de champ "module" avec le sujet `moduleInput$`
     this.trainingForm.get('module')?.valueChanges.subscribe((value) => {
       this.moduleInput$.next(value || '');
+    });
+
+
+
+    this.filteredOrganisms$ = combineLatest([
+      this.entityService.getOrganisms(),
+      this.organismInput$.pipe(startWith('')) // Valeur saisie dans le champ
+    ]).pipe(
+      map(([organisms, input]) =>
+        organisms.filter(organism => organism.toLowerCase().includes(input.toLowerCase())),
+        tap((organism) => console.log(organism))
+      )
+    );
+
+    // Synchronise les changements de champ "organism" avec le sujet `organismInput$`
+    this.trainingForm.get('organism')?.valueChanges.subscribe((value) => {
+      this.organismInput$.next(value || '');
     });
   }
 
@@ -136,6 +156,7 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
           this.trainingForm.patchValue(training);
           this.trainingForm.get('name')?.disable();
           this.trainingForm.get('module')?.disable();
+          this.trainingForm.get('organism')?.disable();
           this.trainingForm.get('origin')?.disable();
 
           this.userCreatedTraining$ = this.userService.getUserByRef(training.userId)
@@ -149,6 +170,7 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
     this.trainingForm = this.fb.group({
       name: ['', Validators.required],
       module: ['', Validators.required],
+      organism: ['', Validators.required],
       origin: ['', Validators.required],
       onAssignmentRequest: [false],
       comment: [''],
@@ -161,6 +183,7 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
       {
         name: '',
         module: '',
+        organism: '',
         origin: '',
         onAssignmentRequest: false,
         comment: '',
@@ -178,6 +201,7 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
     });
 
     this.moduleInput$.next('');
+    this.organismInput$.next('');
   }
 
   private generateId(): string {
@@ -188,7 +212,7 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
     this.notificationService.clearMessage();
     if (this.trainingForm.valid) {
 
-      
+
       let training: Training = {
         ...this.trainingForm.value,
         id: this.idTraining || this.generateId(),

@@ -2,7 +2,7 @@
     <div class="header-container">
         <button mat-flat-button color="primary" (click)="onReturn()">
             <mat-icon>arrow_back</mat-icon>
-            Aller à l'accueil
+            retour Profil
         </button>
         <h2>Les demandes de formations</h2>
     </div>
@@ -63,9 +63,9 @@
             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
             <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell" [attr.colspan]="displayedColumns.length">
-                  Aucune donnée disponible
+                    Aucune donnée disponible
                 </td>
-              </tr>
+            </tr>
         </table>
         <mat-spinner *ngIf="loading$ | async"></mat-spinner>
     </div>

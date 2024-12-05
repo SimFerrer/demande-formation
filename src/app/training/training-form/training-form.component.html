@@ -34,8 +34,9 @@
 
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Module</mat-label>
-                <input matInput placeholder="Entrez le module" formControlName="module" [matAutocomplete]="auto" />
-                <mat-autocomplete #auto="matAutocomplete">
+                <input matInput placeholder="Entrez le module" formControlName="module"
+                    [matAutocomplete]="modulesAuto" />
+                <mat-autocomplete #modulesAuto="matAutocomplete">
                     <mat-option *ngFor="let option of filteredModules$ | async" [value]="option">
                         {{ option }}
                     </mat-option>
@@ -46,8 +47,22 @@
             </mat-form-field>
         </div>
 
-        <!-- Section Origine et Statut -->
+        <!-- Section Organism et Origine -->
         <div class="form-row">
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Organisme</mat-label>
+                <input matInput placeholder="Entrez l'organisme" formControlName="organism"
+                    [matAutocomplete]="organismsAuto" />
+                <mat-autocomplete #organismsAuto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredOrganisms$ | async" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="trainingForm.get('organism')?.hasError('required')">
+                    L'organisme est obligatoire.
+                </mat-error>
+            </mat-form-field>
+
             <mat-form-field appearance="fill" class="form-field">
                 <mat-label>Origine</mat-label>
                 <mat-select formControlName="origin">
@@ -59,7 +74,9 @@
                     L'origine est obligatoire.
                 </mat-error>
             </mat-form-field>
+        </div>
 
+        <div class="form-row">
             <mat-form-field *ngIf="idTraining" appearance="fill" class="form-field">
                 <mat-label>Statut</mat-label>
                 <mat-select formControlName="status">

@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { HeaderComponent } from './components/header/header.component';
 import { SharedModule } from '../shared/shared.module';
 import { CommonModule } from '@angular/common';
-import { HomeComponent } from './components/home/home.component';
 import { CoreRoutingModule } from './core-routing.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { PopupComponent } from './components/popup/popup.component';
@@ -13,7 +12,6 @@ import { TrainingModule } from '../training/training.module';
 @NgModule({
   declarations: [
     HeaderComponent,
-    HomeComponent,
     FooterComponent,
     PopupComponent,
     ProfileComponent
@@ -25,7 +23,7 @@ import { TrainingModule } from '../training/training.module';
   providers: [
     { provide: MAT_DIALOG_DATA, useValue: {} },
     { provide: MatDialogRef, useValue: {} }
-  ],  
+  ],
   imports: [
     CommonModule,
     SharedModule,

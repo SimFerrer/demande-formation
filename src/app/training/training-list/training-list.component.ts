@@ -24,7 +24,7 @@ export class TrainingListComponent implements OnInit {
   displayedColumns: string[] = ['name', 'module', 'status', 'updateDate', 'actions'];
   dataSource: MatTableDataSource<Training> = new MatTableDataSource<Training>();
 
-  constructor(private router: Router, private store: Store, private titleService:Title) { }
+  constructor(private router: Router, private store: Store, private titleService: Title) { }
 
   ngOnInit(): void {
     this.initObservables();
@@ -63,6 +63,6 @@ export class TrainingListComponent implements OnInit {
   }
 
   onReturn() {
-    this.router.navigateByUrl('/training');
+    this.router.navigateByUrl('/profile');
   }
 }
