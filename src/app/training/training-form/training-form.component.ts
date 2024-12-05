@@ -156,7 +156,6 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
           this.trainingForm.patchValue(training);
           this.trainingForm.get('name')?.disable();
           this.trainingForm.get('module')?.disable();
-          this.trainingForm.get('organism')?.disable();
           this.trainingForm.get('origin')?.disable();
 
           this.userCreatedTraining$ = this.userService.getUserByRef(training.userId)
