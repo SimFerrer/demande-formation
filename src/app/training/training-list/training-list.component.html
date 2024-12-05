@@ -1,0 +1,72 @@
+<mat-card>
+    <div class="header-container">
+        <button mat-flat-button color="primary" (click)="onReturn()">
+            <mat-icon>arrow_back</mat-icon>
+            Aller à l'accueil
+        </button>
+        <h2>Les demandes de formations</h2>
+    </div>
+    <mat-divider></mat-divider>
+
+    <div class="add-training-button">
+        <button mat-flat-button color="accent" (click)="onAddTraining()">
+            <mat-icon>add</mat-icon> Ajouter une demande
+        </button>
+    </div>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Rechercher par bénéficiaire, module ou status</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Recherche..." />
+    </mat-form-field>
+
+    <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSource">
+
+            <!-- Colonne Nom -->
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Bénéficiaire </th>
+                <td mat-cell *matCellDef="let training"> {{ training.name }} </td>
+            </ng-container>
+
+            <!-- Colonne Module -->
+            <ng-container matColumnDef="module">
+                <th mat-header-cell *matHeaderCellDef> Module </th>
+                <td mat-cell *matCellDef="let training"> {{ training.module }} </td>
+            </ng-container>
+
+            <!-- Colonne Status -->
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> Status </th>
+                <td mat-cell *matCellDef="let training"> {{ training.status | uppercase }} </td>
+            </ng-container>
+
+            <!-- Colonne Status -->
+            <ng-container matColumnDef="updateDate">
+                <th mat-header-cell *matHeaderCellDef> Date MAJ </th>
+                <td mat-cell *matCellDef="let training"> {{ training.updateDate | date:'dd/MM/YY' }} </td>
+            </ng-container>
+
+            <!-- Colonne pour le bouton de détails -->
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let training">
+                    <button mat-icon-button color="primary" aria-label="Modifier la formation"
+                        (click)="viewDetails(training.id)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <!-- En-têtes du tableau -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <!-- Lignes du tableau -->
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" [attr.colspan]="displayedColumns.length">
+                  Aucune donnée disponible
+                </td>
+              </tr>
+        </table>
+        <mat-spinner *ngIf="loading$ | async"></mat-spinner>
+    </div>
+</mat-card>

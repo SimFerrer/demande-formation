@@ -1,0 +1,8 @@
+<footer>
+    <mat-toolbar>
+        <button mat-raised-button *ngIf="this.user$ | async as user" (click)="goToRules()">
+            <mat-icon>help</mat-icon>
+            Aide
+        </button>
+    </mat-toolbar>
+</footer>

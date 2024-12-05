@@ -1,0 +1,6 @@
+<div *ngIf="message$ | async as message" class="notification" role="alert">
+    <div class="notification-content">
+        <mat-icon aria-hidden="true" fontIcon="check_small"></mat-icon>
+        <p><strong>{{ message }}</strong></p>
+    </div>
+</div>

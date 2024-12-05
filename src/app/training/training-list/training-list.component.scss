@@ -1,0 +1,90 @@
+mat-card {
+    padding: 16px;
+    margin: 8px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    /* Pour s'assurer que la carte prend toute la hauteur de son conteneur */
+    max-height: 80vh;
+    /* Définir la hauteur maximale de la carte (80% de la hauteur de l'écran par exemple) */
+    overflow-y: auto;
+    /* Ajoute un ascenseur vertical si le contenu dépasse */
+}
+
+mat-card mat-list {
+    margin-top: 10px;
+    max-height: 50vh;
+    /* Optionnel, définissez la hauteur maximale de la liste dans la carte */
+    overflow-y: auto;
+    /* Permet le scroll du tableau */
+}
+
+.add-training-button {
+    display: flex;
+    justify-content: flex-start;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fdfbff;
+    /* Utilisation d'une couleur très claire pour l'arrière-plan du tableau */
+}
+
+th.mat-mdc-header-cell,
+td.mat-mdc-cell {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #003057;
+    /* Ligne de séparation entre les lignes */
+}
+
+th.mat-mdc-header-cell {
+    background-color: #00579d;
+    /* Une couleur plus foncée pour l'en-tête */
+    color: #ffffff;
+    /* Couleur blanche pour le texte de l'en-tête */
+    font-weight: bold;
+}
+
+td.mat-mdc-cell {
+    background-color: #e5f7ff;
+    /* Fond clair pour les cellules */
+}
+
+mat-icon-button {
+    margin: 0;
+    padding: 8px;
+    background-color: #3398e6;
+    /* Couleur du fond pour les boutons */
+    border-radius: 50%;
+    color: white;
+    /* Couleur de l'icône en blanc */
+}
+
+mat-icon-button:hover {
+    background-color: #0079d6;
+    /* Couleur plus foncée au survol */
+}
+
+
+@media (max-width: 600px) {
+    mat-card {
+        max-height: 80vh;
+        /* 80% de la hauteur de l'écran pour la carte */
+        padding: 8px;
+    }
+
+    table {
+        font-size: 12px;
+    }
+
+    th.mat-mdc-header-cell,
+    td.mat-mdc-cell {
+        padding: 6px;
+    }
+
+    mat-icon-button {
+        padding: 6px;
+    }
+}

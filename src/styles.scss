@@ -1,0 +1,161 @@
+/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+@use './assets/theme/colors.scss' as colors;
+
+@include mat.core();
+@import "./assets/theme/colors.scss";
+
+$my-theme: mat.define-theme((color: (theme-type: light,
+        primary: $my-m3-colours,
+      ),
+    ));
+
+html {
+  @include mat.all-component-themes($my-theme);
+  height: 100%;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  text-align: center;
+  background: rgb(2, 0, 36);
+  background: radial-gradient(circle, rgba(2, 0, 36, 1) 0%, rgba(199, 180, 180, 0.919) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+header {
+  margin-bottom: 5px;
+}
+
+footer {
+  margin-top: 5px;
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+//Custom global css properties
+
+mat-form {
+  display: inline-block;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: left;
+}
+
+button {
+  margin: 1vh 1vw;
+}
+
+mat-form-field {
+  margin: 2vh 2vw;
+}
+
+mat-option {
+  background-color: lightgray !important;
+  padding: 0;
+  margin: 0;
+}
+
+mat-card {
+  padding: 3vh 2vw;
+  background-color: lightgray !important;
+}
+
+.mat-mdc-menu-panel {
+  background-color: #efedf1 !important;
+}
+
+
+mat-spinner {
+  width: 100% !important;
+  margin: 5px;
+}
+
+.mat-mdc-autocomplete-panel {
+  padding: 0!important;
+}
+
+/*disabled accessibility*/
+.mdc-text-field--filled.mdc-text-field--disabled {
+  background-color: #DDE1E6!important;
+}
+.mdc-text-field--filled.mdc-text-field--disabled .mdc-floating-label {
+  color: #43494E !important;
+}
+.mat-mdc-select-disabled {
+  color: #43494E !important;
+}
+.mdc-text-field--filled.mdc-text-field--disabled .mdc-text-field__input {
+  color: #43494E !important;
+}
+
+.mat-form-field-disabled{
+  cursor:not-allowed; 
+}
+
+h1,
+h2,
+h3 {
+  color: map-get(colors.$my-m3-colours, 35);
+  text-align: center;
+
+}
+
+//Notification
+.notification {
+  padding: 1rem;
+  border: 2px solid map-get(colors.$my-m3-colours, 35);
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.notification-content {
+  display: flex;
+  align-items: center;
+  /* Aligne verticalement les éléments */
+  gap: 8px;
+  /* Ajoute un espace entre l'icône et le texte */
+}
+
+.notification-content mat-icon {
+  font-size: 24px;
+  /* Ajustez la taille de l'icône si nécessaire */
+}
+
+.notification-content p {
+  margin: 0;
+  /* Supprime les marges par défaut du paragraphe */
+}
+
+
+//Scrollbar style
+
+/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px transparent;
+  border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: map-get(colors.$my-m3-colours, 35);
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: map-get(colors.$my-m3-colours, 35);
+}

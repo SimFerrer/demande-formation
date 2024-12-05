@@ -1,0 +1,25 @@
+:host{
+    z-index: 999;
+}
+
+mat-toolbar{
+    background-color: lightgray;
+    padding: 0;
+    margin: 0;
+}
+
+.menu-button{
+    position: absolute;
+    left: 10px;
+    margin: 0;
+}
+
+.app-title{
+    margin-right: auto;
+    margin-left: auto;
+}
+
+mat-slide-toggle{
+    margin-right: 5px;
+}
+

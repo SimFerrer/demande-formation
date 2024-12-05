@@ -1,0 +1,44 @@
+.info-form{
+    text-align: start;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.form-field {
+    flex: 1;
+    min-width: 200px;
+    margin: 0;
+}
+
+.form-checkbox {
+    display: flex;
+    align-items: center;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.mat-mdc-option:focus.mdc-list-item,
+.mat-mdc-option.mat-mdc-option-active.mdc-list-item {
+    border: 2px solid #007bff;
+    box-shadow: 0 0 3px rgba(0, 123, 255, 0.5);
+}
+
+
+.mat-form-field.mat-focused .mat-label {
+    color: #007bff;
+}
+
+

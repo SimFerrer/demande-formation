@@ -1,0 +1,9 @@
+<h2 mat-dialog-title>{{data.title}}</h2>
+<div mat-dialog-content>
+  <label> {{data.description}}</label>
+</div>
+<mat-action-list mat-dialog-actions class="button-list">
+  <button *ngFor="let buttons of data.buttonsBehaviour" mat-flat-button (click)="applyButtonAction(buttons.buttonAction)">
+      {{buttons.buttonName}}
+  </button>
+</mat-action-list>

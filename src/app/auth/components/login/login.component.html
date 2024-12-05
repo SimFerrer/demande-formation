@@ -1,0 +1,29 @@
+<mat-card [formGroup]="loginForm">
+    <h2>Connexion</h2>
+    <!-- Form Fields -->
+    <app-notification></app-notification>
+    <mat-form-field>
+        <mat-label > Email </mat-label>
+        <input type="email" matInput formControlName="email"/>
+        <mat-error>{{getFormControlErrorText(emailCtrl)}}</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label> Mot de passe </mat-label>
+        <input type="password" matInput formControlName="password"/>
+        <mat-error>{{getFormControlErrorText(passwordCtrl)}}</mat-error>
+    </mat-form-field>
+    <mat-error *ngIf="errorInLogIn">Mauvais email / mot de passe</mat-error>
+
+    <!-- Bottom Buttons -->
+    <button mat-flat-button (click)="simpleLogin()">
+        Se connecter
+    </button>
+    <button mat-flat-button (click)="loginWithGoogle()">
+        <mat-icon svgIcon="googleLogo"></mat-icon>
+        Continuer avec Google
+     </button>
+     <button mat-flat-button (click)="goToCreate()" *ngIf="!this.isPopUp">
+        Créer un compte
+     </button>
+
+</mat-card>

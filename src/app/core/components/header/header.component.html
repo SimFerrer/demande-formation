@@ -1,0 +1,27 @@
+<header>
+
+    <mat-toolbar>
+        <button mat-icon-button *ngIf="this.user$ | async as user" [matMenuTriggerFor]="profileMenu"
+            aria-label="Profile menu" class="menu-button">
+            <mat-icon>menu</mat-icon>
+
+            <mat-menu #profileMenu="matMenu">
+
+                <button mat-menu-item (click)="logOut()">
+                    <mat-icon>logout</mat-icon>
+                    <p>Déconnexion</p>
+                </button>
+                <button mat-menu-item (click)="onExportData(user)">
+                    <mat-icon>download</mat-icon>
+                    Exporter mes données
+                </button>
+            </mat-menu>
+
+        </button>
+
+        <h1 class="app-title">
+            ApsiFormation
+        </h1>
+
+    </mat-toolbar>
+</header>

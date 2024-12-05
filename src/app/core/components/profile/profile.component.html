@@ -1,0 +1,17 @@
+<mat-card>
+    <h2 mat-dialog-title>Profil</h2>
+    <mat-list *ngIf="this.user$ | async as user">
+    <mat-list-item> Email: {{user.email}}</mat-list-item>
+    </mat-list>
+
+    <mat-action-list mat-dialog-actions class="button-list">
+        <button mat-flat-button (click)="onTraining()">
+            Demande de formation
+        </button>
+        <span></span>
+        <button mat-flat-button (click)="onDeleteAccount()">
+            Supprimer mon compte
+        </button>
+    </mat-action-list>
+</mat-card>
+

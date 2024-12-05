@@ -1,0 +1,18 @@
+<mat-card>
+    <h2 color="tertiary">Bienvenue</h2>
+    <mat-list *ngIf="this.user$ | async as user">
+        <mat-list-item> Email: {{user.email}}</mat-list-item>
+    </mat-list>
+    <button mat-flat-button (click)="getTrainings()" color="error">
+        Voir les demandes de formation
+        <mat-icon iconPositionEnd>visibility</mat-icon>
+    </button>
+    <button mat-flat-button (click)="createTraining()">
+        Créer une demande de formation
+        <mat-icon iconPositionEnd>add_circle</mat-icon>
+    </button>
+    <button mat-flat-button (click)="goBackToProfile()">
+        <mat-icon>arrow_left_alt</mat-icon>
+        Voir mon profil
+    </button>
+</mat-card>

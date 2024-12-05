@@ -1,0 +1,101 @@
+<mat-card>
+    <div class="header-container">
+        <button mat-flat-button color="primary" (click)="onReturn()">
+            <mat-icon>arrow_back</mat-icon>
+            Aller aux demandes
+        </button>
+        @if(!idTraining){
+        <h2 #trainingTitleRef tabindex="-1">Créer une nouvelle demande</h2>
+        }
+        @else{
+        <h2 #trainingTitleRef tabindex="-1">Modifier la demande</h2>
+        }
+
+    </div>
+    <mat-divider></mat-divider>
+    <app-notification></app-notification>
+
+    <div class="info-form">
+        <p aria-hidden="true">Les champs marqués d'un * sont obligatoires</p>
+        <p *ngIf="userCreatedTraining$ | async as user">Demande de formation créée par
+            <strong>{{user.email}}</strong>
+        </p>
+    </div>
+    <form #trainingFormRef [formGroup]="trainingForm" (ngSubmit)="onSubmit()" class="form-container">
+        <!-- Section Nom et Module -->
+        <div class="form-row">
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Nom du bénéficiaire</mat-label>
+                <input matInput placeholder="Entrez le nom" formControlName="name" />
+                <mat-error *ngIf="trainingForm.get('name')?.hasError('required')">
+                    Le nom est obligatoire.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Module</mat-label>
+                <input matInput placeholder="Entrez le module" formControlName="module" [matAutocomplete]="auto" />
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let option of filteredModules$ | async" [value]="option">
+                        {{ option }}
+                    </mat-option>
+                </mat-autocomplete>
+                <mat-error *ngIf="trainingForm.get('module')?.hasError('required')">
+                    Le module est obligatoire.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!-- Section Origine et Statut -->
+        <div class="form-row">
+            <mat-form-field appearance="fill" class="form-field">
+                <mat-label>Origine</mat-label>
+                <mat-select formControlName="origin">
+                    <mat-option *ngFor="let option of originOptions" [value]="option">
+                        {{ option | titlecase }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="trainingForm.get('origin')?.hasError('required')">
+                    L'origine est obligatoire.
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field *ngIf="idTraining" appearance="fill" class="form-field">
+                <mat-label>Statut</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option *ngFor="let option of statusOptions" [value]="option">
+                        {{ option | titlecase }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="trainingForm.get('status')?.hasError('required')">
+                    Le statut est obligatoire.
+                </mat-error>
+            </mat-form-field>
+        </div>
+
+        <!-- Section Commentaire et Checkbox -->
+        <div class="form-row">
+            <mat-checkbox formControlName="onAssignmentRequest" class="form-checkbox">
+                Besoin mission
+            </mat-checkbox>
+        </div>
+
+        <mat-form-field appearance="fill" class="form-field">
+            <mat-label>Commentaire</mat-label>
+            <textarea matInput placeholder="Ajoutez un commentaire" formControlName="comment"></textarea>
+        </mat-form-field>
+
+        <!-- Bouton d'actions -->
+        <div class="form-actions">
+
+            <button mat-raised-button color="primary" type="submit" [disabled]="!trainingForm.valid">
+                @if(!idTraining){
+                Ajouter la formation
+                }
+                @else {
+                Modifier la formation
+                }
+            </button>
+        </div>
+    </form>
+</mat-card>
