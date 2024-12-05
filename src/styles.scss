@@ -101,6 +101,23 @@ mat-spinner {
   cursor:not-allowed; 
 }
 
+
+
+.mat-mdc-unelevated-button:focus {
+  background-color: #ffffff!important;
+  color: map-get(colors.$my-m3-colours, 35)!important;
+}
+
+.mat-mdc-mini-fab {
+  background-color: map-get(colors.$my-m3-colours, 35)!important;
+  color: #ffffff!important;
+}
+
+.mat-mdc-mini-fab:focus {
+  background-color: #ffffff!important;
+  color: map-get(colors.$my-m3-colours, 35)!important;
+}
+
 h1,
 h2,
 h3 {

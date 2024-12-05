@@ -9,8 +9,13 @@
     <mat-divider></mat-divider>
 
     <div class="add-training-button">
-        <button mat-flat-button color="accent" (click)="onAddTraining()">
-            <mat-icon>add</mat-icon> Ajouter une demande
+        <button mat-mini-fab color="accent" (click)="onAddTraining()" title="Ajouter une demande"
+            aria-label="Ajouter une demande">
+            <mat-icon>add</mat-icon>
+        </button>
+        <button mat-mini-fab color="accent" (click)="onAddTraining()" title="Ajouter une demande"
+            aria-label="Ajouter une demande">
+            <mat-icon><span class="material-symbols-outlined">file_export</span></mat-icon>
         </button>
     </div>
 

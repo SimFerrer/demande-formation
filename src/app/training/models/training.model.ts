@@ -30,5 +30,5 @@ export enum TrainingStatus {
     PLANNED = "planifiée",
     INPROGRESS = "en cours",
     COMPLETED = "completée",
-    CANCELLED = "annulé",
+    CANCELLED = "annulée",
 }
