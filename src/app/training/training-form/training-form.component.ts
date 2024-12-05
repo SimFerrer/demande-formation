@@ -4,7 +4,7 @@ import firebase from "firebase/compat/app";
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { DocumentReference } from '@angular/fire/compat/firestore';
 import { Training, OriginStatus, TrainingStatus } from '../models/training.model';
-import { BehaviorSubject, combineLatest, startWith, map, Observable, filter, tap, Subject, takeUntil } from 'rxjs';
+import { BehaviorSubject, combineLatest, startWith, map, Observable, filter, tap, Subject, takeUntil, of, debounceTime, distinctUntilChanged } from 'rxjs';
 import { AuthService } from '../../auth/services/auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from '../../shared/services/notification.service';
@@ -112,38 +112,36 @@ export class TrainingFormComponent implements OnInit, OnDestroy {
 
 
   private manageAutocomplete() {
-    // Gestion de l'autocomplétion des modules
-    this.filteredModules$ = combineLatest([
+    combineLatest([
       this.entityService.getModules(),
-      this.moduleInput$.pipe(startWith('')) // Valeur saisie dans le champ
+      this.entityService.getOrganisms(),
+      this.moduleInput$.pipe(startWith('')),
+      this.organismInput$.pipe(startWith(''))
     ]).pipe(
-      map(([modules, input]) =>
-        modules.filter(module => module.toLowerCase().includes(input.toLowerCase()))
-      )
-    );
+      map(([modules, organisms, moduleInput, organismInput]) => {
+        const filteredModules = modules.filter(module =>
+          module.toLowerCase().includes(moduleInput.toLowerCase())
+        );
+        const filteredOrganisms = organisms.filter(organism =>
+          organism.toLowerCase().includes(organismInput.toLowerCase())
+        );
+        return { filteredModules, filteredOrganisms };
+      })
+    ).subscribe(({ filteredModules, filteredOrganisms }) => {
+      this.filteredModules$ = of(filteredModules);
+      this.filteredOrganisms$ = of(filteredOrganisms);
+    });
 
-    // Synchronise les changements de champ "module" avec le sujet `moduleInput$`
     this.trainingForm.get('module')?.valueChanges.subscribe((value) => {
       this.moduleInput$.next(value || '');
     });
 
-
-
-    this.filteredOrganisms$ = combineLatest([
-      this.entityService.getOrganisms(),
-      this.organismInput$.pipe(startWith('')) // Valeur saisie dans le champ
-    ]).pipe(
-      map(([organisms, input]) =>
-        organisms.filter(organism => organism.toLowerCase().includes(input.toLowerCase())),
-        tap((organism) => console.log(organism))
-      )
-    );
-
-    // Synchronise les changements de champ "organism" avec le sujet `organismInput$`
+    // Synchroniser les changements de champ "organism" avec le sujet `organismInput$`
     this.trainingForm.get('organism')?.valueChanges.subscribe((value) => {
       this.organismInput$.next(value || '');
     });
   }
+
 
   private loadTrainingData(): void {
 

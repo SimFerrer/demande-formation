@@ -53,9 +53,7 @@ export class EntityService {
 
     // Convenience methods for Organisms
     getOrganisms(): Observable<string[]> {
-        return this.getEntities('organisms').pipe(
-            tap((ogarnisms) => console.log(ogarnisms))
-        );
+        return this.getEntities('organisms');
     }
 
     addOrganism(organismName: string): Observable<void> {
